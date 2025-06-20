@@ -2,6 +2,7 @@ package com.example.newsapp.feature_news_page.presentation.news_items.components
 
 import android.R
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,29 +29,43 @@ import com.example.newsapp.feature_news_page.domain.model.NewsSource
 @Composable
 fun NewsItem(
     newsItem: NewsItem,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit
+//    modifier: Modifier = Modifier
 ){
+//    TODO(encode urls  URLEncoder.encode(url, StandardCharsets.UTF_8.toString()))
     Row(
         modifier = Modifier
-            .height(100.dp)
+            .height(90.dp)
             .fillMaxWidth()
             .padding(horizontal = 2.dp)
-            .border(width = 1.dp, color = Color.Black, shape = RoundedCornerShape(corner = CornerSize(12.dp)))
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .border(width = 1.dp, color = Color.Black, shape = RoundedCornerShape(corner = CornerSize(8.dp)))
+            .padding(horizontal = 12.dp, vertical = 12.dp)
+            .clickable{onClick()}
+        ,
         horizontalArrangement = Arrangement.SpaceBetween,
     ){
-        Column(modifier = Modifier.fillMaxWidth(0.6f)){
+        Column(modifier = Modifier.fillMaxWidth(0.7f)){
             Text(
                 text = newsItem.title,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .fillMaxWidth(),
+                style = MaterialTheme.typography.headlineSmall,
                 maxLines = 1
             )
             Text(
                 text = newsItem.author,
                 modifier = Modifier
-                    .fillMaxWidth(0.5f)
+                    .fillMaxWidth(),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.primary,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
+            )
+            Text(
+                text = newsItem.publishedAt,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.primary
             )
         }
         GlideImage(
@@ -61,11 +77,17 @@ fun NewsItem(
     }
 }
 
-val temp = NewsItem(NewsSource("abc", "def"), author = "ghi", title="alooilfwerugfla32;ou4bgvp;aw3o4bugvp;", description = "mno", url="pqr", urlToImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc9APxkj0xClmrU3PpMZglHQkx446nQPG6lA&s", publishedAt = "", content = "")
+val temp = NewsItem(NewsSource("abc", "def"),
+    author = "ghikjlll",
+    title="alooilfwerugfla32;ou4bgvp;aw3o4bugvp;",
+    description = "mno", url="pqr",
+    urlToImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc9APxkj0xClmrU3PpMZglHQkx446nQPG6lA&s",
+    publishedAt = "2025-06-16T16:31:08Z",
+    content = "")
 
 
-//@Preview( showBackground = true)
-//@Composable
-//fun NewsItemPreview(modifier: Modifier = Modifier) {
-//    NewsItem(temp)
-//}
+@Preview( showBackground = true)
+@Composable
+fun NewsItemPreview(modifier: Modifier = Modifier) {
+    NewsItem(temp,{})
+}

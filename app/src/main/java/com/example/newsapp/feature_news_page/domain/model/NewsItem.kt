@@ -9,4 +9,17 @@ data class NewsItem(
     val urlToImage: String,
     val publishedAt: String,
     val content: String,
-)
+){
+    companion object {
+        val EMPTY = NewsItem(
+            source = NewsSource.EMPTY,
+            author = "",
+            title = "",
+            description = "",
+            url = "",
+            urlToImage = "",
+            publishedAt = "",
+            content = ""
+        )
+    }
+}
